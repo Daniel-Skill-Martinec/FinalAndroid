@@ -59,11 +59,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cur = db.query(TODO_TABLE, null, null, null, null, null, null, null);
             if(cur != null){
                 if(cur.moveToFirst()){
+                    int idColumnIndex = cur.getColumnIndexOrThrow(ID);
+                    int taskColumnIndex = cur.getColumnIndexOrThrow(TASK);
+                    int statusColumnIndex = cur.getColumnIndexOrThrow(STATUS);
                     do{
                         ToDoModel task = new ToDoModel();
-                        task.setId(cur.getInt(cur.getColumnIndex(ID)));
-                        task.setTask(cur.getString(cur.getColumnIndex(TASK))); //What?
-                        task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                        task.setId(cur.getInt(idColumnIndex));
+                        task.setTask(cur.getString(taskColumnIndex));
+                        task.setStatus(cur.getInt(statusColumnIndex));
                         taskList.add(task);
                     }while(cur.moveToNext());
                 }
@@ -71,7 +74,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         finally {
             db.endTransaction();
-            cur.close();
+            if (cur != null) {
+                cur.close();
+            }
         }
         return taskList;
     }

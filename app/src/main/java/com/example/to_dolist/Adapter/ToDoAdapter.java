@@ -24,7 +24,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private MainActivity activity;
     private DatabaseHandler db;
 
-    public ToDoAdapter(MainActivity activity){
+    public ToDoAdapter(DatabaseHandler db,MainActivity activity){
         this.db = db;
         this.activity = activity;
     }
@@ -87,7 +87,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
     }
 
-    public static class ViewHolder extends  RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
     CheckBox task;
         ViewHolder(View view){
             super(view);
